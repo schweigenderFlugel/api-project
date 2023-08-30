@@ -3,6 +3,7 @@ import routes from "./routes/index.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import passport from "passport";
+import fileUpload from "express-fileupload";
 
 import LocalStrategy from "./utils/auth/strategies/local-strategy.js";
 import JwtStrategy from "./utils/auth/strategies/jwt-strategy.js";
@@ -14,9 +15,14 @@ const createApp = () => {
 
   // MIDDLEWARES
   app.use(express.json());
+  app.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: './uploads'
+  }))
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
   app.use(cors(corsOptions));
+ 
 
   routes(app);
 

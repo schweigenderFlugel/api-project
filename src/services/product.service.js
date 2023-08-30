@@ -16,8 +16,8 @@ class ProductService {
     return product; 
   }
 
-  async createProduct(data) {
-    await storage.createProduct(data); 
+  async createProduct(data, imageUrl) {
+    await storage.createProduct(data, imageUrl); 
   }
 
   async updateProduct(id, data) {

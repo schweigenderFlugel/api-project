@@ -1,5 +1,6 @@
 import express from "express";
 import passport from "passport";
+import uploadImage from "../utils/cloudinary.js";
 
 import ProductService from "../services/product.service.js";
 import validatorHandler from "../middlewares/validator.handler.js";
@@ -35,7 +36,16 @@ route.post("/",
   async (req, res, next) => {
     try {
       const data = req.body;
-      await service.createProduct(data);
+      const result = await uploadImage(req.files.image.tempFilePath);
+      const imageUrl = req.files?.image 
+        ? {
+          public_id: result.public_id,
+          secure_url: result.secure_url,
+          format: result.format,
+        }
+        : {};
+      
+      await service.createProduct(data, imageUrl);
       res.status(201).json({ message: "Product created successfully!" });
     } catch (error) {
       next(error);

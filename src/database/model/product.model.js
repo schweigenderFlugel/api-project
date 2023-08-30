@@ -9,6 +9,10 @@ const productSchema = new Schema({
     type: Number,
     required: true,
   },
+  imageUrl: {
+    public_id: String,
+    secure_url: String
+  }
 });
 
 const ProductModel = model("Products", productSchema);

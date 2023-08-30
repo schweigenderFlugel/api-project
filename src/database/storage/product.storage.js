@@ -15,8 +15,11 @@ class ProductStorage {
     }
   }
 
-  async createProduct(data) {
-    await ProductModel.create(data);
+  async createProduct(data, imageUrl) {
+    await ProductModel.create({
+      ...data,
+      imageUrl: imageUrl
+    });
   }
 
   async updateProduct(id, data) {
