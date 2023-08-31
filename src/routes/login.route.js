@@ -25,7 +25,7 @@ route.post("/",
 
         const foundUser = await service.getUserById(user.id);
 
-        const accessToken = jwt.sign(payload, config.jwtSecret, { expiresIn: '5m' });
+        const accessToken = jwt.sign(payload, config.jwtSecret, { expiresIn: '20m' });
         const refreshToken = jwt.sign(payload, config.jwtRefreshSecret, { expiresIn: '1d' });
 
         const newRefreshTokenArray = !cookies?.jwt 

@@ -1,6 +1,7 @@
 import express from "express";
 import passport from "passport";
-import uploadImage from "../utils/cloudinary.js";
+import fs from "fs-extra";
+import { uploadImage, deleteImage } from "../utils/cloudinary.js";
 
 import ProductService from "../services/product.service.js";
 import validatorHandler from "../middlewares/validator.handler.js";
@@ -36,15 +37,13 @@ route.post("/",
   async (req, res, next) => {
     try {
       const data = req.body;
-      const result = await uploadImage(req.files.image.tempFilePath);
-      const imageUrl = req.files?.image 
-        ? {
-          public_id: result.public_id,
-          secure_url: result.secure_url,
-          format: result.format,
-        }
-        : {};
+      const result = await uploadImage(req.files.image.tempFilePath, "products");
+      const imageUrl = {
+        public_id: result.public_id,
+        secure_url: result.secure_url,
+      }
       
+      await fs.unlink(req.files.image.tempFilePath);
       await service.createProduct(data, imageUrl);
       res.status(201).json({ message: "Product created successfully!" });
     } catch (error) {
@@ -61,6 +60,7 @@ route.patch("/:id",
     try {
       const { id } = req.params;
       const data = req.body;
+      await fs.unlink(req.files.image.tempFilePath);
       await service.updateProduct(id, data);
       res.status(201).json({ message: "Product modified successfully!" });
     } catch (error) {
@@ -75,7 +75,8 @@ route.delete("/:id",
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      await service.deleteProduct(id);
+      const product = await service.deleteProduct(id);
+      await deleteImage(product.imageUrl.public_id)
       res.status(201).json({ message: "Product removed successfully!" });
     } catch (error) {
       next(error);

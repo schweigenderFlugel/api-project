@@ -8,10 +8,14 @@ cloudinary.config({
     secure: true,
 })
 
-const uploadImage = async (filePath) => {
+const uploadImage = async (filePath, folder) => {
     return await cloudinary.uploader.upload(filePath, {
-        folder: 'products'
+        folder: folder
     })
 }
 
-export default uploadImage;
+const deleteImage = async (public_id) => {
+    return await cloudinary.uploader.destroy(public_id);
+}
+
+export { uploadImage, deleteImage };

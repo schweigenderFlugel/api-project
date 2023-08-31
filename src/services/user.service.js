@@ -1,16 +1,15 @@
 import bcrypt from "bcrypt";
-import nodemailer from "nodemailer";
 import boom from "@hapi/boom";
 import UserStorage from "../database/storage/user.storage.js";
-import config from "../config/config.js";
+import sendMail from "../utils/nodemailer.js";
 
 const storage = new UserStorage();
 
 class UserService {
-  async createUser(data) {
+  async createUser(data, imageUrl) {
     try {
       data.password = await bcrypt.hash(data.password, 10);
-      await storage.createUser(data);
+      await storage.createUser(data, imageUrl);
       const mail = {
         from: "TESTING <sender@gmail.com>",
         to: data.email,
@@ -18,20 +17,7 @@ class UserService {
         text: "Se ha registrado exitosamente",
         html: "ingrese a nuestra página haciendo click en el siguiente siguiente link",
       };
-      let transporter = nodemailer.createTransport({
-        service: "gmail",
-        host: "smtp.gmail.com",
-        secure: true,
-        port: 587,
-        auth: {
-          user: config.gmailAddress,
-          pass: config.gmailPassword,
-        },
-        tls: {
-          rejectUnauthorized: false,
-        },
-      });
-      transporter.sendMail(mail);
+      sendMail(mail)
     } catch (error) {
       throw boom.conflict(error);
     }

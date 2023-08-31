@@ -9,9 +9,19 @@ const productSchema = new Schema({
     type: Number,
     required: true,
   },
+  description: {
+    type: String,
+    required: true
+  },
   imageUrl: {
-    public_id: String,
-    secure_url: String
+    public_id: {
+      type: String,
+      required: true
+    },
+    secure_url: {
+      type: String,
+      required: true
+    }
   }
 });
 

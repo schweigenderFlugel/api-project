@@ -28,6 +28,7 @@ class ProductService {
   async deleteProduct(id) {
     const product = await storage.deleteProduct(id);
     if (!product) throw boom.notFound("Not found!");
+    return product;
   }
 }
 

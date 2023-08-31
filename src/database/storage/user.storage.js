@@ -18,11 +18,12 @@ class UserStorage {
     return user;
   }
 
-  async createUser(data) {
+  async createUser(data, imageUrl) {
     const objectId = new mongoose.Types.ObjectId;
     await UserModel.create({
       ...data,
       profileId: objectId,
+      imageUrl: imageUrl,
     });
     await ProfileModel.create({
       _id: objectId

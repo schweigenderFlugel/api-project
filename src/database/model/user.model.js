@@ -27,6 +27,16 @@ const userSchema = new Schema({
     trim: true,
     default: 'customer'
   },
+  imageUrl: {
+    public_id: {
+      type: String,
+      required: true
+    },
+    secure_url: {
+      type: String,
+      required: true
+    }
+  },
   profileId: {
     type: Schema.Types.ObjectId,
     required: true,
