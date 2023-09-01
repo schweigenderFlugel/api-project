@@ -1,5 +1,7 @@
 import boom from "@hapi/boom";
+import fs from "fs-extra";
 import ProductStorage from "../database/storage/product.storage.js";
+import { uploadImage, deleteImage } from "../utils/cloudinary.js";
 
 const storage = new ProductStorage();
 
@@ -16,7 +18,13 @@ class ProductService {
     return product; 
   }
 
-  async createProduct(data, imageUrl) {
+  async createProduct(data, image) {
+    const result = await uploadImage(image, "products");
+    const imageUrl = {
+      public_id: result.public_id,
+      secure_url: result.secure_url,
+    }
+    await fs.unlink(image);
     await storage.createProduct(data, imageUrl); 
   }
 
@@ -28,7 +36,7 @@ class ProductService {
   async deleteProduct(id) {
     const product = await storage.deleteProduct(id);
     if (!product) throw boom.notFound("Not found!");
-    return product;
+    await deleteImage(product.imageUrl.public_id);
   }
 }
 

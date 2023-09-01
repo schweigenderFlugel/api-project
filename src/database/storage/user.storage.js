@@ -30,10 +30,27 @@ class UserStorage {
     });
   }
 
+  async changePassword (id, password) {
+    const valid = mongoose.isValidObjectId(id);
+    if (valid) {
+      await UserModel.findOneAndUpdate({
+        id, 
+        password: password
+      });
+    }
+  }
+
   async saveRefreshToken(id, refreshToken) {
     await UserModel.findOneAndUpdate({
       id, 
       refreshToken
+    })
+  }
+
+  async saveRecoveryToken(id, recoveryToken) {
+    await UserModel.findOneAndUpdate({
+      id,
+      recoveryToken
     })
   }
 }

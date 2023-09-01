@@ -6,6 +6,7 @@ import logoutRoute from './logout.route.js';
 import profileRoute from './profile.route.js';
 import orderRoute from './order.route.js';
 import refreshTokenRoute from './refresh-token.route.js';
+import passwordRecoveryRoute from './password-recovery.route.js'
 
 const routes = (app) => {
     const router = express.Router();
@@ -17,6 +18,7 @@ const routes = (app) => {
     router.use('/profile', profileRoute);
     router.use('/order', orderRoute);
     router.use('/refresh-token', refreshTokenRoute);
+    router.use('/password-recovery', passwordRecoveryRoute);
 }
 
 export default routes;
