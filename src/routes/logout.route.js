@@ -6,6 +6,26 @@ import UserService from '../services/user.service.js';
 const route = express.Router();
 const service = new UserService();
 
+/**
+ * @openapi
+ * /api/v1/logout:
+ *  get:
+ *    summary: logout and delete the refresh token cookie
+ *    tags: [Logout]
+ *    responses: 
+ *      200: 
+ *        content: 
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  description: logout message
+ *                  example: logout successfully
+ *      404:
+ *        description: Not Found!
+ */
 route.get("/", async (req, res, next) => {
   try {
     const cookies = req.cookies;

@@ -27,7 +27,7 @@ const userSchema = new Schema({
     trim: true,
     default: 'customer'
   },
-  imageUrl: {
+  image: {
     public_id: {
       type: String,
       required: true

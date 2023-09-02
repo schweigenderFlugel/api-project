@@ -28,15 +28,23 @@ class ProductService {
     await storage.createProduct(data, imageUrl); 
   }
 
-  async updateProduct(id, data) {
-    const product = await storage.updateProduct(id, data);
+  async updateProduct(id, data, image) {
+    const product = await storage.getProductById(id);
     if (!product) throw boom.notFound("Not found!");
+    await deleteImage(product.image.public_id);
+    const result = await uploadImage(image, "products");
+    const imageUrl = {
+      public_id: result.public_id,
+      secure_url: result.secure_url,
+    }
+    await fs.unlink(image);
+    await storage.updateProduct(id, data, imageUrl);
   }
 
   async deleteProduct(id) {
     const product = await storage.deleteProduct(id);
     if (!product) throw boom.notFound("Not found!");
-    await deleteImage(product.imageUrl.public_id);
+    await deleteImage(product.image.public_id);
   }
 }
 

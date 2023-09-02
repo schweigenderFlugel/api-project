@@ -15,7 +15,7 @@ class OrderStorage {
     const objectId = new mongoose.Types.ObjectId;
     await OrderModel.create({
       _id: objectId,
-      productId: data.productId,
+      products: data.product,
       customer: id
     })
     await UserModel.findOneAndUpdate({

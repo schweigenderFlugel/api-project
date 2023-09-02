@@ -1,9 +1,9 @@
 import Joi from "joi";
 
-const productId = Joi.array();
+const products = Joi.array();
 
 const createOrderSchema = Joi.object({
-    productId: productId.required(),
+    products: products.required(),
 });
 
 export default createOrderSchema;

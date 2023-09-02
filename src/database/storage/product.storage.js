@@ -15,21 +15,21 @@ class ProductStorage {
     }
   }
 
-  async createProduct(data, imageUrl) {
+  async createProduct(data, image) {
     await ProductModel.create({
       ...data,
-      imageUrl: imageUrl
+      image: image
     });
   }
 
-  async updateProduct(id, data) {
+  async updateProduct(id, data, image) {
     const isValid = mongoose.isValidObjectId(id);
     if (isValid) {
       const product = await ProductModel.findOneAndUpdate({
         _id: id,
-        ...data
+        ...data,
+        image: image
       })
-      return product; 
     }
   }
 

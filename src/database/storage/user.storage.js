@@ -4,7 +4,7 @@ import { ProfileModel, UserModel } from "../connection.js";
 class UserStorage {
   async getUserByEmail(email) {
     const user = await UserModel.findOne({ email: email })
-      .populate({ path: "orders", select: "productId" })
+      .populate({ path: "orders", select: "products" })
     return user;
   }
 
@@ -18,12 +18,12 @@ class UserStorage {
     return user;
   }
 
-  async createUser(data, imageUrl) {
+  async createUser(data, image) {
     const objectId = new mongoose.Types.ObjectId;
     await UserModel.create({
       ...data,
       profileId: objectId,
-      imageUrl: imageUrl,
+      image: image,
     });
     await ProfileModel.create({
       _id: objectId

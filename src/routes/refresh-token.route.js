@@ -7,6 +7,18 @@ import config from "../config/config.js";
 const route = express.Router();
 const service = new UserService();
 
+/**
+ * @openapi
+ * /api/v1/refresh-token:
+ *  get:
+ *    summary: new refresh token cookie
+ *    tags: [Refresh Token]
+ *    responses: 
+ *      200: 
+ *        description: New refresh token!
+ *      404:
+ *        description: Not Found!
+ */
 route.get('/', async (req, res, next) => {
   try {
     const cookies = req.cookies;

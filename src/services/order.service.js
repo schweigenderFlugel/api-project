@@ -25,11 +25,8 @@ class OrderService {
 
   async deleteOrder(userId, id) {
     const ordersNumber = await userStorage.getUserById(userId);
-    ordersNumber.ordersNumber === 0 
-      ? ordersNumber.ordersNumbers === 0
-      : ordersNumber.ordersNumber - 1 ;
+    ordersNumber.ordersNumber = ordersNumber.ordersNumber - 1 ;
     const order = await orderStorage.deleteOrder(userId, id, ordersNumber.ordersNumber);
-    // ATTENTION: THIS ERROR CAUSES A FAILURE IN THE API. 
     if (!order) throw boom.notFound("Not found!");
   }
 }

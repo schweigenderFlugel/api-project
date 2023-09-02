@@ -7,6 +7,49 @@ const service = new UserService();
 
 const route = express.Router();
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    user: 
+ *      type: object
+ *      properties: 
+ *        username: 
+ *          type: string
+ *          description: introduce username
+ *        email: 
+ *          type: string
+ *          description: introduce email
+ *        password: 
+ *          type: string
+ *          description: introduce username
+ *        image: 
+ *          type: string
+ *          format: binary
+ */
+
+/**
+ * @openapi
+ * /api/v1/user:
+ *  post:
+ *    summary: create a new user
+ *    tags: 
+ *      [User]
+ *    requestBody: 
+ *      required: true 
+ *      content: 
+ *        multipart/form-data: 
+ *            schema: 
+ *              type: object
+ *              $ref: '#/components/schemas/user'
+ *    responses:
+ *      200: 
+ *        description: new user created
+ *      400: 
+ *        description: bad request
+ *      409:
+ *        description: Conflict! the username and email must be unique
+ */
 route.post("/",
   validatorHandler(createUserSchema, "body"),
   async (req, res, next) => {
