@@ -26,6 +26,11 @@ const route = express.Router();
  *        image: 
  *          type: string
  *          format: binary
+ *        required:
+ *          - username
+ *          - email
+ *          - password
+ *          - image
  */
 
 /**
