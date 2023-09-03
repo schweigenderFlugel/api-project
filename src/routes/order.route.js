@@ -118,6 +118,15 @@ route.get("/:id",
  *    responses:
  *      201: 
  *        description: The order was successfully created!
+ *        content:
+ *          application/json:
+ *            schema: 
+ *              type: object
+ *              properties: 
+ *                message: 
+ *                  type: string
+ *                  description: message of success
+ *                  example: Order created successfully!
  *      401: 
  *        description: Unauthorized!
  */

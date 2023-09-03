@@ -29,7 +29,7 @@ describe("/testing the login route", () => {
 
     test("it should response with status code 401", async () => {
       const input = {
-        email: "facundo@correo.com",
+        email: "facundoez@correo.com",
         password: "pass123456",
       };
       const { statusCode } = await api.post("/api/v1/login").send(input);
@@ -38,8 +38,8 @@ describe("/testing the login route", () => {
 
     test("it should response with status code 200", async () => {
       const input = {
-        email: "facundo@correo.com",
-        password: "fafafa123456",
+        email: "facundoez@correo.com",
+        password: "fafafa1234",
       };
       const { statusCode, body } = await api.post("/api/v1/login").send(input);
       expect( statusCode ).toEqual(200);

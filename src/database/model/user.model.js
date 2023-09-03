@@ -58,7 +58,6 @@ const userSchema = new Schema({
   },
   recoveryToken: {
     type: String,
-    required: true,
     default: null
   },
 });

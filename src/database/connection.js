@@ -7,7 +7,11 @@ import OrderModel from "./model/order.model.js";
 import ProductModel from "./model/product.model.js";
 import UserModel from "./model/user.model.js";
 
-connect(config.mongoDbUri)
+const mongoDbUri = config.enviroment === "test"
+  ? config.mongoDbUriTest
+  : config.mongoDbUri
+
+connect(mongoDbUri)
   .then(() => console.log("Connected to mongodb!"))
   .catch((err) => {
     throw boom.internal(`It could'n connect to the database`);

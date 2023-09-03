@@ -12,6 +12,10 @@ const service = new ProfileService();
  *  schemas: 
  *    profile:
  *      properties:
+ *        _id: 
+ *          type: string
+ *          description: the id of the profile
+ *          example: 64sdsd8sdf4ds86
  *        name: 
  *          type: string
  *          description: name of the user
@@ -27,7 +31,7 @@ const service = new ProfileService();
  *        number: 
  *          type: string
  *          description: number of residence
- *          example: 666 
+ *          example: 000
  */
 
 /**
@@ -127,7 +131,7 @@ route.patch("/:id",
       const id = req.params.id;
       const data = req.body; 
       await service.updateProfile(id, data);
-      res.status(201).json({ message: 'Profile updated'})
+      res.status(201).json({ message: 'Profile updated' })
     } catch (error) {
       next(error);
     }

@@ -48,6 +48,7 @@ const service = new ProductService();
  *    tags: [Product]
  *    responses: 
  *      200: 
+ *        description: Shows a list of products
  *        content: 
  *          application/json:
  *            schema: 
@@ -78,7 +79,7 @@ route.get("/", async (req, res, next) => {
  *          description: the product id
  *    responses:
  *      200:
- *        description: shows a specific product
+ *        description: Shows a specific product
  *        content:
  *          application/json:
  *            schema:
@@ -137,7 +138,7 @@ route.get("/:id", async (req, res, next) => {
  *              - image
  *    responses:
  *      201:
- *        description: a product was successfully created
+ *        description: A product was successfully created
  *        content:
  *          application/json:
  *            schema: 

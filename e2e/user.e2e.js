@@ -1,5 +1,5 @@
-import createApp from "../src/app";
 import request from "supertest";
+import createApp from "../src/app";
 
 describe("/testing the user route", () => {
   let app = null;
@@ -14,18 +14,16 @@ describe("/testing the user route", () => {
 
   describe("POST/ user", () => {
     test("should response with status code 409", async () => {
-      const input = {
-        username: "facu156890",
-        email: "facundo@correo.com",
-        password: "fafafa123456"
-      }
-
-      const { statusCode } = await api.post("/api/v1/user").send(input);
+      const { statusCode } = await api.post("/api/v1/user")
+        .field("username", "facu1023556")
+        .field("email", "facundoez@correo.com")
+        .field("password", "fafafa1234")
+        .attach("image" , "./e2e/testFiles/userFile.jpg");
       expect(statusCode).toEqual(409);
     });
   });
 
-  afterAll(() => {
-    server.close();
+  afterAll(async () => {
+    await server.close();
   });
 });

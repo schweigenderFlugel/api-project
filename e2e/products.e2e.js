@@ -13,11 +13,11 @@ describe("testing the products route", () => {
     api = request(app);
   });
 
-  describe("GET /products", () => {
+  describe("products", () => {
     beforeAll(async () => {
       const input = {
-        email: "facundo@correo.com",
-        password: "fafafa123456",
+        email: "facundoez@correo.com",
+        password: "fafafa1234",
       };
       const { body } = await api.post("/api/v1/login").send(input);
       accessToken = body.accessToken;
@@ -36,8 +36,19 @@ describe("testing the products route", () => {
 
     test("should get a status code 400", async () => {
       const { statusCode } = await api.post("/api/v1/product")
-        .set('Authorization', `Bearer ${accessToken}`).send(); 
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send(); 
         expect(statusCode).toEqual(400);
+    })
+
+    test("should get a status code 201", async () => {
+      const { statusCode } = await api.post("/api/v1/product")
+        .set('Authorization', `Bearer ${accessToken}`)
+        .field("name", "pizza")
+        .field("price", "2000")
+        .field("description", "con peperoni")
+        .attach("image", "./e2e/testFiles/productFile.jpg")
+        expect(statusCode).toEqual(201);
     })
   });
 
