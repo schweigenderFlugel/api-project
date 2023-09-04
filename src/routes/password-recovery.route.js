@@ -1,5 +1,7 @@
 import express from "express";
 import PasswordRecoveryService from "../services/password-recovery.service.js";
+import validatorHandler from "../middlewares/validator.handler.js";
+import { newPassword, sendEmail } from "../schema/passoword-recovery.schema.js";
 
 const service = new PasswordRecoveryService();
 
@@ -34,7 +36,7 @@ const route = express.Router();
  *              $ref: '#/components/schemas/password-recovery'
  *    responses:
  *      200: 
- *        description: A email was sent successfully
+ *        description: A email was sent successfully!
  *        content:
  *          application/json:
  *            schema: 
@@ -46,17 +48,19 @@ const route = express.Router();
  *                  example: Email sent successfully!
  *        
  *      400: 
- *        description: bad request
+ *        description: Bad request!
  *      
  */
-route.post('/send-email', async (req, res, next) => {
-  try {
-    const { email } = req.body;
-    await service.sendPasswordRecovery(email);
-    res.status(201).json({ message: "Email sent successfully" });
-  } catch (error) {
-    next(error)
-  }
+route.post('/send-email', 
+  validatorHandler(sendEmail, 'body'),
+  async (req, res, next) => {
+    try {
+      const { email } = req.body;
+      await service.sendPasswordRecovery(email);
+      res.status(201).json({ message: "Email sent successfully" });
+    } catch (error) {
+      next(error)
+    }
 });
 
 /**
@@ -109,15 +113,17 @@ route.post('/send-email', async (req, res, next) => {
  *        description: Error! it's malformed token
  *      
  */
-route.post("/new-password", async (req, res, next) => {
-  try {
-    const { token, password } = req.body;
-    await service.changePassword(token, password);
-    res.status(201).json({ message: "Password changed successfully" });
-  } catch (error) {
-    next(error);
-  }
-});
+route.post("/new-password",
+  validatorHandler(newPassword, 'body'),
+  async (req, res, next) => {
+    try {
+      const { token, password } = req.body;
+      await service.changePassword(token, password);
+      res.status(201).json({ message: "Password changed successfully" });
+    } catch (error) {
+      next(error);
+    }
+  });
 
 export default route;
   

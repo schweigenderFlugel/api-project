@@ -26,11 +26,11 @@ const route = express.Router();
  *        image: 
  *          type: string
  *          format: binary
- *        required:
- *          - username
- *          - email
- *          - password
- *          - image
+ *      required:
+ *        - username
+ *        - email
+ *        - password
+ *        - image
  */
 
 /**
@@ -49,11 +49,11 @@ const route = express.Router();
  *              $ref: '#/components/schemas/user'
  *    responses:
  *      200: 
- *        description: new user created
+ *        description: New user created!
  *      400: 
- *        description: bad request
+ *        description: Bad request! 
  *      409:
- *        description: Conflict! the username and email must be unique
+ *        description: Conflict! The username and email must be unique
  */
 route.post("/",
   validatorHandler(createUserSchema, "body"),
